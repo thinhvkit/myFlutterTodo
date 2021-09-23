@@ -140,11 +140,16 @@ class _$TaskDao extends TaskDao {
 
   @override
   Future<List<Task>> getAllTasks() async {
-    return _queryAdapter.queryList('SELECT * FROM task_table',
+    return _queryAdapter.queryList('SELECT * FROM Task',
         mapper: (Map<String, Object?> row) => Task(
             id: row['id'] as String,
             name: row['name'] as String,
             complete: (row['complete'] as int) != 0));
+  }
+
+  @override
+  Future<void> insertAllTasks(List<Task> tasks) async {
+    await _taskInsertionAdapter.insertList(tasks, OnConflictStrategy.replace);
   }
 
   @override

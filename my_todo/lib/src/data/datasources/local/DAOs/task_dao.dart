@@ -9,6 +9,9 @@ abstract class TaskDao {
   Future<List<Task>> getAllTasks();
 
   @Insert(onConflict: OnConflictStrategy.replace)
+  Future<void> insertAllTasks(List<Task> tasks);
+
+  @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertTask(Task task);
 
   @Update(onConflict: OnConflictStrategy.replace)

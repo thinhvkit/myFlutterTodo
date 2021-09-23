@@ -1,11 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 @entity
 class Task extends Equatable {
   @primaryKey
   final String id;
   final String name;
+
+  @JsonKey(ignore: true)
   final bool complete;
 
   const Task({required this.id, this.name = '', this.complete = false});

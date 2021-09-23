@@ -12,10 +12,11 @@ class LocalTaskLoading extends LocalTaskState {}
 
 class LocalTaskDone extends LocalTaskState {
   final List<Task> tasks;
-  const LocalTaskDone([this.tasks = const []]);
+  final VisibilityFilter activeFilter;
+  const LocalTaskDone(this.tasks, this.activeFilter);
 
   @override
-  List<Object> get props => [tasks];
+  List<Object> get props => [tasks, activeFilter];
 }
 
 class LocalTaskError extends LocalTaskState {}

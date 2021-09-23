@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-
 import 'package:my_todo/src/core/params/task_request.dart';
 import 'package:my_todo/src/core/resources/data_state.dart';
 import 'package:my_todo/src/data/datasources/local/app_database.dart';
@@ -12,16 +11,22 @@ import 'package:my_todo/src/domain/repositories/task_repository.dart';
 class TaskRepositoryImpl implements TaskRepository {
   final TaskApiService tasksApiService;
   final AppDatabase? appDatabase;
-  const TaskRepositoryImpl(Object object,
-      {required this.tasksApiService, this.appDatabase});
+  const TaskRepositoryImpl(this.tasksApiService, this.appDatabase);
 
   @override
   Future<DataState<List<Task>>> getTasks(TaskRequestParams? params) async {
     try {
+      final tasks = await appDatabase?.taskDao.getAllTasks();
+
+      if(tasks != null && tasks.isNotEmpty){
+        return DataSuccess(tasks);
+      }
+
       final httpResponse = await tasksApiService.getTasks();
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data.tasks as List<Task>);
+        appDatabase?.taskDao.insertAllTasks(httpResponse.data);
+        return DataSuccess(httpResponse.data);
       }
       return DataFailed(
         DioError(
@@ -38,7 +43,11 @@ class TaskRepositoryImpl implements TaskRepository {
 
   @override
   Future<List<Task>> getSavedTasks() async {
-    return appDatabase!.taskDao.getAllTasks();
+    if(appDatabase != null) {
+      return appDatabase!.taskDao.getAllTasks();
+    } else {
+      return const [];
+    }
   }
 
   @override

@@ -7,7 +7,7 @@ import 'package:my_todo/src/domain/repositories/task_repository.dart';
 class GetTaskUseCase
     implements UseCase<DataState<List<Task>>, TaskRequestParams> {
   final TaskRepository taskRepository;
-  GetTaskUseCase(Object object, {required this.taskRepository});
+  GetTaskUseCase(this.taskRepository);
 
   @override
   Future<DataState<List<Task>>> call({TaskRequestParams? params}) {

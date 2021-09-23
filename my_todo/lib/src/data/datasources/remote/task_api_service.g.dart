@@ -16,17 +16,19 @@ class _TaskApiService implements TaskApiService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<TaskResponseModel>> getTasks() async {
+  Future<HttpResponse<List<TaskModel>>> getTasks() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<TaskResponseModel>>(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<HttpResponse<List<TaskModel>>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/tasks',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TaskResponseModel.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => TaskModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

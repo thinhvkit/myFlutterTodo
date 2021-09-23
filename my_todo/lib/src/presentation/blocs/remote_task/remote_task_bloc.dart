@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
 
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:my_todo/src/core/bloc/bloc_with_state.dart';

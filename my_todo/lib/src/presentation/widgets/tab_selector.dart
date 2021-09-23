@@ -19,10 +19,26 @@ class TabSelector extends StatelessWidget {
       onTap: (index) => onTabSelected(AppTab.values[index]),
       items: AppTab.values.map((tab) {
         return BottomNavigationBarItem(
-          icon: Icon(
-            tab == AppTab.todos ? Icons.list : Icons.show_chart,
-          ),
-          label: 'todos',
+          icon: Icon((() {
+            switch(tab){
+              case AppTab.all:
+                return Icons.list;
+              case AppTab.complete:
+                return Icons.check_box;
+              default:
+                return Icons.check_box_outline_blank;
+            }
+          }())),
+        label: (() {
+          switch(tab){
+            case AppTab.all:
+              return "All";
+            case AppTab.complete:
+              return "Complete";
+            default:
+              return "Incomplete";
+          }
+        }()),
         );
       }).toList(),
     );

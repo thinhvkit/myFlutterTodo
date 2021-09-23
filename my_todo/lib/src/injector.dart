@@ -7,6 +7,7 @@ import 'package:my_todo/src/domain/usecases/get_saved_tasks_usecase.dart';
 import 'package:my_todo/src/domain/usecases/get_task_usecase.dart';
 import 'package:my_todo/src/domain/usecases/remove_task_usecase.dart';
 import 'package:my_todo/src/domain/usecases/save_task_usecase.dart';
+import 'package:my_todo/src/domain/usecases/update_task_usecase.dart';
 import 'package:my_todo/src/presentation/blocs/local_task/local_task_bloc.dart';
 import 'package:my_todo/src/presentation/blocs/remote_task/remote_task_bloc.dart';
 
@@ -29,18 +30,18 @@ Future<void> initializeDependencies() async {
 
   // *
   injector.registerSingleton<TaskRepository>(
-    TaskRepositoryImpl(injector(), tasksApiService: injector()),
+    TaskRepositoryImpl(injector(), injector()),
   );
 
   // UseCases
-  injector.registerSingleton<GetTaskUseCase>(
-      GetTaskUseCase(injector(), taskRepository: injector()));
+  injector.registerSingleton<GetTaskUseCase>(GetTaskUseCase(injector()));
 
   // *
   injector
       .registerSingleton<GetSavedTaskUseCase>(GetSavedTaskUseCase(injector()));
   injector.registerSingleton<SaveTaskUseCase>(SaveTaskUseCase(injector()));
   injector.registerSingleton<RemoveTaskUseCase>(RemoveTaskUseCase(injector()));
+  injector.registerSingleton<UpdateTaskUseCase>(UpdateTaskUseCase(injector()));
 
   // Blocs
   injector.registerFactory<RemoteTaskBloc>(

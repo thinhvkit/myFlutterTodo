@@ -42,6 +42,7 @@ dependencies:
 
   flutter_bloc: ^7.2.0
   equatable: ^2.0.3
+  json_annotation: ^4.1.0
 
   # icons
   ionicons: ^0.1.2
@@ -50,6 +51,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  json_serializable: any
   retrofit_generator: any
   floor_generator: ^1.2.0
   build_runner: any
