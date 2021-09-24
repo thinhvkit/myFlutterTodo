@@ -8,7 +8,10 @@ class SaveTaskUseCase implements UseCase<void, Task> {
   SaveTaskUseCase(this._taskRepository);
 
   @override
-  Future<void> call({required Task params}) {
-    return _taskRepository.saveTask(params);
+  Future<void> call({Task? params}) {
+    if (params != null) {
+      return _taskRepository.saveTask(params);
+    }
+    return Future.value();
   }
 }

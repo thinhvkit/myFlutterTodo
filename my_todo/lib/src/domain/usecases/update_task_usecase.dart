@@ -8,7 +8,10 @@ class UpdateTaskUseCase implements UseCase<void, Task> {
   UpdateTaskUseCase(this._taskRepository);
 
   @override
-  Future<void> call({required Task params}) {
-    return _taskRepository.updateTask(params);
+  Future<void> call({Task? params}) {
+    if (params != null) {
+      return _taskRepository.updateTask(params);
+    }
+    return Future.value();
   }
 }

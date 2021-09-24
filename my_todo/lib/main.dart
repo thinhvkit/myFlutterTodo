@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_todo/src/config/routes/app_routes.dart';
 import 'package:my_todo/src/config/themes/app_theme.dart';
 import 'package:my_todo/src/core/utils/constants.dart';
-import 'package:my_todo/src/data/models/visibility_filter.dart';
 import 'package:my_todo/src/injector.dart';
 import 'package:my_todo/src/presentation/blocs/local_task/local_task_bloc.dart';
 import 'package:my_todo/src/presentation/blocs/remote_task/remote_task_bloc.dart';
@@ -25,12 +24,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider<TabBloc>(
-              create: (_) => TabBloc()),
+          BlocProvider<TabBloc>(create: (_) => injector()),
           BlocProvider<RemoteTaskBloc>(
               create: (_) => injector()..add(const GetTasks())),
-          BlocProvider<LocalTaskBloc>(
-              create: (_) => injector())
+          BlocProvider<LocalTaskBloc>(create: (_) => injector())
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,

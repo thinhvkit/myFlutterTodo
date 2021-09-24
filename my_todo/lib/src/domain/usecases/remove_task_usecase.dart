@@ -8,7 +8,10 @@ class RemoveTaskUseCase implements UseCase<void, Task> {
   RemoveTaskUseCase(this._taskRepository);
 
   @override
-  Future<void> call({required Task params}) {
-    return _taskRepository.removeTask(params);
+  Future<void> call({Task? params}) {
+    if (params != null) {
+      return _taskRepository.removeTask(params);
+    }
+    return Future.value();
   }
 }
