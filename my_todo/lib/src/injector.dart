@@ -9,7 +9,6 @@ import 'package:my_todo/src/domain/usecases/remove_task_usecase.dart';
 import 'package:my_todo/src/domain/usecases/save_task_usecase.dart';
 import 'package:my_todo/src/domain/usecases/update_task_usecase.dart';
 import 'package:my_todo/src/presentation/blocs/local_task/local_task_bloc.dart';
-import 'package:my_todo/src/presentation/blocs/remote_task/remote_task_bloc.dart';
 import 'package:my_todo/src/presentation/blocs/tab/tab_bloc.dart';
 
 import 'core/utils/constants.dart';
@@ -49,12 +48,8 @@ Future<void> initializeDependencies() async {
     () => TabBloc(),
   );
 
-  injector.registerFactory<RemoteTaskBloc>(
-    () => RemoteTaskBloc(injector()),
-  );
-
   // *
   injector.registerFactory<LocalTaskBloc>(
-    () => LocalTaskBloc(injector(), injector(), injector(), injector()),
+    () => LocalTaskBloc(injector(), injector(), injector(), injector(), injector()),
   );
 }

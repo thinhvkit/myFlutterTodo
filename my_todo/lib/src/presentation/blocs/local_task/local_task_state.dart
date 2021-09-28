@@ -19,4 +19,10 @@ class LocalTaskDone extends LocalTaskState {
   List<Object> get props => [tasks, activeFilter];
 }
 
-class LocalTaskError extends LocalTaskState {}
+class LocalTaskError extends LocalTaskState {
+  final DioError? dioError;
+  const LocalTaskError(this.dioError);
+
+  @override
+  List<Object> get props => [dioError ?? ''];
+}

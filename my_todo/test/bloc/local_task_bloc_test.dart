@@ -5,6 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:my_todo/src/data/models/visibility_filter.dart';
 import 'package:my_todo/src/domain/entities/task.dart';
 import 'package:my_todo/src/domain/usecases/get_saved_tasks_usecase.dart';
+import 'package:my_todo/src/domain/usecases/get_task_usecase.dart';
 import 'package:my_todo/src/domain/usecases/remove_task_usecase.dart';
 import 'package:my_todo/src/domain/usecases/save_task_usecase.dart';
 import 'package:my_todo/src/domain/usecases/update_task_usecase.dart';
@@ -13,6 +14,7 @@ import 'package:my_todo/src/presentation/blocs/local_task/local_task_bloc.dart';
 import 'local_task_bloc_test.mocks.dart';
 
 @GenerateMocks([
+  GetTaskUseCase,
   GetSavedTaskUseCase,
   SaveTaskUseCase,
   UpdateTaskUseCase,
@@ -22,6 +24,7 @@ void main() {
   final tasks = [const Task(id: "0", complete: false), const Task(id: "1", complete: true)];
 
   group("LocalTaskBloc", () {
+    var _getTaskUseCase = MockGetTaskUseCase();
     var _getSavedTaskUseCase = MockGetSavedTaskUseCase();
     var _saveTaskUseCase = MockSaveTaskUseCase();
     var _updateTaskUseCase = MockUpdateTaskUseCase();
@@ -29,7 +32,7 @@ void main() {
 
     blocTest("should update the VisibilityFilter when filter is active",
         build: () {
-          LocalTaskBloc localTaskBloc = LocalTaskBloc(_getSavedTaskUseCase,
+          LocalTaskBloc localTaskBloc = LocalTaskBloc(_getTaskUseCase,_getSavedTaskUseCase,
               _saveTaskUseCase, _updateTaskUseCase, _removeTaskUseCase);
           when(_getSavedTaskUseCase())
               .thenAnswer((_) async => Future.value(tasks));
@@ -43,7 +46,7 @@ void main() {
 
     blocTest("should update the VisibilityFilter when filter is complete",
         build: () {
-          LocalTaskBloc localTaskBloc = LocalTaskBloc(_getSavedTaskUseCase,
+          LocalTaskBloc localTaskBloc = LocalTaskBloc(_getTaskUseCase, _getSavedTaskUseCase,
               _saveTaskUseCase, _updateTaskUseCase, _removeTaskUseCase);
           when(_getSavedTaskUseCase())
               .thenAnswer((_) async => Future.value(tasks));

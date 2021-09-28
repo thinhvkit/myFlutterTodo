@@ -5,7 +5,6 @@ import 'package:my_todo/src/config/themes/app_theme.dart';
 import 'package:my_todo/src/core/utils/constants.dart';
 import 'package:my_todo/src/injector.dart';
 import 'package:my_todo/src/presentation/blocs/local_task/local_task_bloc.dart';
-import 'package:my_todo/src/presentation/blocs/remote_task/remote_task_bloc.dart';
 import 'package:my_todo/src/presentation/blocs/tab/tab_bloc.dart';
 
 Future<void> main() async {
@@ -25,9 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<TabBloc>(create: (_) => injector()),
-          BlocProvider<RemoteTaskBloc>(
-              create: (_) => injector()..add(const GetTasks())),
-          BlocProvider<LocalTaskBloc>(create: (_) => injector())
+          BlocProvider<LocalTaskBloc>(create: (_) => injector()..add(const GetAllTasks()))
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
